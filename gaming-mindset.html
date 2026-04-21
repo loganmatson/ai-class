@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fail Forward — Gaming Mindset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a1a; overflow-x: hidden; }
+
+/* ══════════════════════════════════════
+   INTRO OVERLAY — Rich Book Style
+══════════════════════════════════════ */
+#intro-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+#intro-overlay.dismissing {
+  opacity: 0;
+  transform: translateY(-40px);
+}
+
+/* Animated page background for all steps */
+.page-turn-bg {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+}
+.page-layer {
+  position: absolute; border-radius: 4px;
+  animation: pageDrift linear infinite;
+  opacity: 0.07;
+}
+@keyframes pageDrift {
+  0%   { transform: translateY(120%) rotate(var(--rot)); }
+  100% { transform: translateY(-120%) rotate(var(--rot)); }
+}
+
+.intro-step {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 40px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.intro-step.active { opacity: 1; pointer-events: all; transform: translateX(0); }
+.intro-step.exit    { opacity: 0; transform: translateX(-60px); }
+
+/* ── Step 1: Fixed Mindset ── */
+#intro-step-1 { background: #1a0a0a; }
+#intro-step-1 .page-layer { background: #fff; }
+.step1-eyebrow {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 14px; color: #ff6b6b; letter-spacing: 2px;
+  margin-bottom: 12px; text-transform: uppercase;
+}
+.step1-title {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: 58px; color: #fff; line-height: 1;
+  letter-spacing: -1px; margin-bottom: 8px; text-align: center;
+}
+.step1-sub {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 17px; color: rgba(255,100,100,0.7);
+  margin-bottom: 32px; text-align: center;
+}
+.trait-list { width: 100%; max-width: 440px; }
+.trait-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  margin-bottom: 18px; opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.trait-item.show { opacity: 1; transform: translateX(0); }
+.trait-bullet {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 14px; font-weight: 800;
+  margin-top: 2px;
+}
+.trait-bullet.bad  { background: rgba(255,80,80,0.2); color: #ff6b6b; border: 1.5px solid rgba(255,80,80,0.4); }
+.trait-bullet.good { background: rgba(50,220,100,0.15); color: #44ee77; border: 1.5px solid rgba(50,220,100,0.4); }
+.trait-content {}
+.trait-headline {
+  font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: 17px; font-style: italic; line-height: 1.2;
+  margin-bottom: 3px;
+}
+.trait-item .trait-headline { color: #ff9999; }
+.trait-desc {
+  font-family: 'Lora', serif; font-size: 13px;
+  line-height: 1.5; color: rgba(255,255,255,0.5);
+}
+
+/* ── Step 2: Growth Mindset ── */
+#intro-step-2 { background: #f0f7f0; }
+#intro-step-2 .page-layer { background: #1a3a1a; }
+.step2-eyebrow {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 14px; color: #1a7a3a; letter-spacing: 2px;
+  margin-bottom: 12px; text-transform: uppercase;
+}
+.step2-title {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: 58px; color: #0d2d0d; line-height: 1;
+  letter-spacing: -1px; margin-bottom: 8px; text-align: center;
+}
+.step2-sub {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 17px; color: #2a6a3a;
+  margin-bottom: 32px; text-align: center;
+}
+#intro-step-2 .trait-item .trait-headline { color: #1a5a2a; }
+#intro-step-2 .trait-desc { color: rgba(0,60,20,0.6); }
+
+/* ── Step 3: Head-to-Head comparison ── */
+#intro-step-3 {
+  background: linear-gradient(135deg, #1a0a0a 0%, #0d1a0d 100%);
+  flex-direction: column; align-items: center;
+}
+#intro-step-3 .page-layer { background: #fff; }
+.step3-header {
+  font-family: 'Playfair Display', serif; font-size: 15px;
+  font-style: italic; color: rgba(255,255,255,0.4);
+  text-align: center; margin-bottom: 24px; letter-spacing: 2px;
+}
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; max-width: 600px; width: 100%;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; overflow: hidden;
+  margin-bottom: 32px;
+}
+.compare-col { padding: 24px 20px; }
+.compare-col.fixed-col { background: rgba(255,50,50,0.08); border-right: 1px solid rgba(255,255,255,0.08); }
+.compare-col.growth-col { background: rgba(50,200,80,0.08); }
+.compare-col-label {
+  font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+  font-size: 18px; margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.fixed-col .compare-col-label { color: #ff7777; }
+.growth-col .compare-col-label { color: #44ee77; }
+.compare-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 12px; opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.compare-row.show { opacity: 1; }
+.compare-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.compare-text {
+  font-family: 'Lora', serif; font-size: 13px; font-style: italic;
+  font-weight: 600; line-height: 1.4;
+}
+.fixed-col .compare-text { color: rgba(255,180,180,0.85); }
+.growth-col .compare-text { color: rgba(180,255,200,0.85); }
+
+/* ── Step 4: The Hook ── */
+#intro-step-4 { background: #0a0a1a; }
+#intro-step-4 .page-layer { background: #fff; }
+.hook-rule { width: 60px; height: 2px; background: #fff; opacity: 0.2; margin: 0 auto 24px; }
+.hook-eyebrow {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 14px; color: rgba(255,255,255,0.4);
+  text-align: center; letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.hook-title {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: 48px; color: #fff; line-height: 1.1;
+  text-align: center; max-width: 560px;
+  letter-spacing: -1px; margin-bottom: 20px;
+}
+.hook-title em { font-style: italic; color: #ffd700; }
+.hook-sub {
+  font-family: 'Lora', serif; font-size: 17px;
+  color: rgba(255,255,255,0.5); text-align: center;
+  max-width: 420px; line-height: 1.7; margin-bottom: 36px;
+}
+.hook-mechanics {
+  display: flex; gap: 32px; margin-bottom: 40px;
+}
+.hook-mechanic {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(16px);
+}
+.hook-mechanic.show { opacity: 1; transform: translateY(0); }
+.hook-mechanic-num {
+  font-family: 'Playfair Display', serif; font-size: 36px;
+  font-weight: 900; color: #ffd700; line-height: 1;
+}
+.hook-mechanic-label {
+  font-family: 'Lora', serif; font-size: 12px; font-style: italic;
+  color: rgba(255,255,255,0.4); text-align: center; max-width: 80px;
+}
+
+/* Shared intro button */
+.intro-btn {
+  font-family: 'Inter', sans-serif;
+  padding: 14px 40px; font-size: 15px; font-weight: 700;
+  border: none; border-radius: 50px; cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.3px;
+}
+.intro-btn:hover { transform: scale(1.03); opacity: 0.92; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+#intro-step-1 .intro-btn { background: #ff6b6b; color: #fff; }
+#intro-step-2 .intro-btn { background: #1a7a3a; color: #fff; }
+#intro-step-3 .intro-btn { background: #fff; color: #111; }
+#intro-step-4 .intro-btn { background: #ffd700; color: #111; font-size: 16px; padding: 16px 52px; }
+
+/* Step dots */
+.intro-dots {
+  position: absolute; bottom: 32px;
+  display: flex; gap: 10px; align-items: center;
+}
+.intro-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: background 0.3s, width 0.3s, border-radius 0.3s;
+}
+.intro-dot.active { background: rgba(255,255,255,0.8); width: 22px; border-radius: 3.5px; }
+#intro-step-2 .intro-dot         { background: rgba(0,60,20,0.2); }
+#intro-step-2 .intro-dot.active  { background: #1a7a3a; }
+
+/* Floating pages background animation */
+.fp { position: absolute; pointer-events: none; }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 40px;
+  background: #0d0d1a;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#hero-bg-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-particle {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  animation: heroFloat linear infinite;
+}
+@keyframes heroFloat {
+  0%   { transform: translateY(110vh) scale(0.8); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+}
+#hero-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(80,60,180,0.25) 0%, transparent 70%);
+}
+#hero h1 {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: 96px; letter-spacing: -4px; line-height: 0.95;
+  color: #fff;
+  margin-bottom: 20px;
+  position: relative; z-index: 2;
+  text-shadow: 0 2px 40px rgba(120,80,255,0.3);
+}
+#hero h1 em { font-style: italic; color: #ffd700; }
+#hero .subtitle {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 19px; color: rgba(255,255,255,0.5); max-width: 480px;
+  line-height: 1.7; margin-bottom: 52px;
+  position: relative; z-index: 2;
+}
+.progress-ring-wrap { margin-bottom: 20px; position: relative; z-index: 2; }
+.progress-ring-label { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 12px; letter-spacing: 0.5px; }
+.hero-scroll-hint { margin-top: 60px; font-size: 13px; color: rgba(255,255,255,0.25); letter-spacing: 2px; text-transform: uppercase; animation: bounce 2s ease-in-out infinite; position: relative; z-index: 2; }
+@keyframes bounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(6px)} }
+#hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, rgba(112,197,206,0.18));
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   GAME SECTIONS
+══════════════════════════════════════ */
+.game-section {
+  width: 100vw; min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px 80px;
+  position: relative; overflow: hidden;
+}
+.game-section[data-game="flappy"]    { background: #70c5ce; }
+.game-section[data-game="snake"]     { background: #000; }
+.game-section[data-game="temple"]    { background: #1a1005; }
+.game-section[data-game="pong"]      { background: #0d0d40; }
+.game-section[data-game="asteroids"] { background: #000014; }
+
+.atmo { position: absolute; pointer-events: none; }
+.flappy-cloud { position: absolute; bottom: 0; width: 100%; height: 80px; background: linear-gradient(to top, rgba(255,255,255,0.3), transparent); }
+.temple-fog { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(0,40,20,0.6) 0%, transparent 70%); pointer-events: none; }
+.pong-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(0,80,160,0.2) 0%, transparent 70%); pointer-events: none; }
+.star-field-atmo { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+
+.game-section-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; z-index: 2; position: relative; }
+.game-section-icon { font-size: 36px; margin-bottom: 8px; }
+.game-section-name { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4px; }
+.game-section-lives { font-size: 22px; letter-spacing: 6px; margin-bottom: 10px; }
+.game-section-dots { display: flex; gap: 8px; margin-bottom: 8px; }
+.sdot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.4); background: transparent; transition: background 0.3s; }
+.sdot.filled { background: #fff; border-color: #fff; }
+.game-section[data-game="snake"] .game-section-name,
+.game-section[data-game="snake"] .game-section-lives,
+.game-section[data-game="temple"] .game-section-name,
+.game-section[data-game="temple"] .game-section-lives,
+.game-section[data-game="pong"] .game-section-name,
+.game-section[data-game="pong"] .game-section-lives,
+.game-section[data-game="asteroids"] .game-section-name,
+.game-section[data-game="asteroids"] .game-section-lives { color: #fff; }
+.game-section[data-game="flappy"] .game-section-name,
+.game-section[data-game="flappy"] .game-section-lives { color: #1a1a1a; }
+.game-section[data-game="flappy"] .sdot { border-color: rgba(0,0,0,0.3); }
+.game-section[data-game="flappy"] .sdot.filled { background: #1a1a1a; border-color: #1a1a1a; }
+
+.controls-hint { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; margin-top: 12px; z-index: 2; position: relative; }
+.game-section[data-game="flappy"] .controls-hint { color: #1a1a1a; }
+.game-section[data-game="snake"] .controls-hint,
+.game-section[data-game="temple"] .controls-hint,
+.game-section[data-game="pong"] .controls-hint,
+.game-section[data-game="asteroids"] .controls-hint { color: #fff; }
+
+.canvas-wrap { position: relative; z-index: 2; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 80px rgba(0,0,0,0.4); }
+canvas { display: block; }
+
+.start-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border-radius: 12px; z-index: 5; }
+.game-section[data-game="flappy"] .start-overlay { background: rgba(112,197,206,0.9); }
+.game-section[data-game="snake"] .start-overlay { background: rgba(0,0,0,0.9); }
+.game-section[data-game="temple"] .start-overlay { background: rgba(26,16,5,0.9); }
+.game-section[data-game="pong"] .start-overlay { background: rgba(13,13,64,0.9); }
+.game-section[data-game="asteroids"] .start-overlay { background: rgba(0,0,20,0.9); }
+.start-overlay h3 { font-size: 22px; font-weight: 800; color: #fff; }
+.start-overlay p  { font-size: 13px; color: rgba(255,255,255,0.6); }
+.start-countdown { font-size: 72px; font-weight: 900; color: #fff; line-height: 1; }
+.start-countdown-label { font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+.start-play-btn { font-family: 'Inter', sans-serif; background: #fff; color: #111; border: none; border-radius: 8px; padding: 10px 28px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: opacity 0.15s; }
+.start-play-btn:hover { opacity: 0.85; }
+
+.done-badge { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: rgba(0,0,0,0.7); border-radius: 12px; z-index: 5; }
+.done-badge .done-icon { font-size: 48px; }
+.done-badge .done-text { font-size: 18px; font-weight: 800; color: #fff; }
+.done-badge .done-sub  { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+.lock-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; z-index: 10; backdrop-filter: blur(8px); transition: opacity 0.6s ease; }
+.game-section[data-game="flappy"] .lock-overlay { background: rgba(112,197,206,0.7); }
+.game-section[data-game="snake"] .lock-overlay { background: rgba(0,0,0,0.7); }
+.game-section[data-game="temple"] .lock-overlay { background: rgba(26,16,5,0.7); }
+.game-section[data-game="pong"] .lock-overlay { background: rgba(13,13,64,0.7); }
+.game-section[data-game="asteroids"] .lock-overlay { background: rgba(0,0,20,0.7); }
+.lock-overlay.unlocked { opacity: 0; pointer-events: none; }
+.lock-icon { font-size: 48px; }
+.lock-text { font-size: 18px; font-weight: 800; color: #fff; }
+.lock-sub  { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+/* ══════════════════════════════════════
+   FINISH SECTION
+══════════════════════════════════════ */
+#finish-section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 40px; background: #1a1a1a; text-align: center; }
+#finish-section h2 { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; color: #fff; letter-spacing: -2px; margin-bottom: 16px; }
+#finish-section p { font-family: 'Lora', serif; font-style: italic; font-size: 20px; color: #888; max-width: 480px; line-height: 1.6; margin-bottom: 48px; }
+.finish-takeaways { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 700px; width: 100%; margin-bottom: 48px; }
+.finish-t { background: #2a2a2a; border-radius: 10px; padding: 16px 20px; text-align: left; }
+.finish-t-num { font-size: 11px; font-weight: 700; color: #555; letter-spacing: 1px; margin-bottom: 6px; }
+.finish-t-quote { font-family: 'Lora', serif; font-style: italic; font-size: 14px; font-weight: 600; color: #fff; line-height: 1.4; }
+.scroll-top-btn { font-family: 'Inter', sans-serif; background: #fff; color: #111; border: none; border-radius: 50px; padding: 16px 48px; font-size: 16px; font-weight: 700; cursor: pointer; transition: opacity 0.15s; }
+.scroll-top-btn:hover { opacity: 0.85; }
+
+/* ══════════════════════════════════════
+   TAKEAWAY MODAL — Full viewport two-column
+══════════════════════════════════════ */
+#modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  opacity: 0; transform: scale(0.97);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  grid-template-columns: 65fr 35fr;
+}
+#modal-overlay.show {
+  opacity: 1; transform: scale(1);
+}
+#modal-overlay.dismissing {
+  opacity: 0; transform: scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.modal-left {
+  background: #fffef8;
+  padding: 80px 64px 60px 80px;
+  display: flex; flex-direction: column;
+  border-top: 4px solid #8B6914;
+  overflow-y: auto;
+}
+.modal-right {
+  background: #f8f4ee;
+  padding: 80px 48px 60px 48px;
+  border-left: 1px solid #e8d8a0;
+  border-top: 4px solid #d4a017;
+  display: flex; flex-direction: column; gap: 36px;
+  overflow-y: auto;
+}
+.modal-label {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 12px; color: #8B6914; letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.modal-quote {
+  font-family: 'Lora', serif; font-weight: 700; font-style: normal;
+  font-size: 40px; line-height: 1.15; margin-bottom: 24px;
+  color: #1a1a1a; letter-spacing: -0.5px;
+}
+.modal-divider {
+  width: 60px; height: 2px; background: #d4a017;
+  margin-bottom: 28px;
+}
+.modal-body {
+  font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 400;
+  color: #2a2a2a; line-height: 1.8;
+}
+.modal-body p { margin-bottom: 18px; }
+.modal-body p:last-child { margin-bottom: 0; }
+.modal-body strong { font-weight: 700; color: #1a1a1a; }
+.modal-body em { font-style: italic; color: #5a3e00; }
+.modal-footer {
+  margin-top: auto; padding-top: 48px;
+  display: flex; align-items: center; gap: 24px;
+}
+.modal-countdown {
+  font-size: 12px; color: #999; font-weight: 600;
+  min-width: 80px; font-family: 'Inter', sans-serif; letter-spacing: 0.5px;
+}
+.modal-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 700;
+  background: #8B6914; color: #fff;
+  border: none; border-radius: 4px;
+  padding: 13px 32px; cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+  letter-spacing: 0.5px; white-space: nowrap;
+}
+.modal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.modal-btn:not(:disabled):hover { background: #6a4f10; }
+.modal-speaker-block {
+  border-left: 3px solid #8B6914; padding-left: 20px;
+}
+.modal-speaker-name {
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.2px; color: #8B6914;
+  margin-bottom: 10px;
+}
+.modal-speaker-note {
+  font-family: 'Lora', serif; font-size: 20px; font-style: italic;
+  color: #4a3a1a; line-height: 1.7;
+}
+.modal-direct-quote {
+  font-family: 'Lora', serif; font-size: 18px; font-style: italic;
+  color: #6a5a2a;
+  border-left: 3px solid #d4a017; padding-left: 20px;
+  line-height: 1.75;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ INTRO OVERLAY ══ -->
+<div id="intro-overlay">
+
+  <!-- Step 1: Fixed Mindset -->
+  <div class="intro-step active" id="intro-step-1">
+    <div class="page-turn-bg" id="ptbg1"></div>
+    <div class="step1-eyebrow">Chapter One</div>
+    <div class="step1-title">The Fixed<br>Mindset</div>
+    <div class="step1-sub">When intelligence feels like a ceiling.</div>
+    <div class="trait-list">
+      <div class="trait-item" id="f1">
+        <div class="trait-bullet bad">✕</div>
+        <div class="trait-content">
+          <div class="trait-headline">Avoids Challenges</div>
+          <div class="trait-desc">If it might expose weakness, it's not worth trying. Safety comes before growth.</div>
+        </div>
+      </div>
+      <div class="trait-item" id="f2">
+        <div class="trait-bullet bad">✕</div>
+        <div class="trait-content">
+          <div class="trait-headline">Blames the Tool, Not the Prompt</div>
+          <div class="trait-desc">When the model fails, it's the model's fault. The prompt was fine. It had to be.</div>
+        </div>
+      </div>
+      <div class="trait-item" id="f3">
+        <div class="trait-bullet bad">✕</div>
+        <div class="trait-content">
+          <div class="trait-headline">Treats Others as Threats</div>
+          <div class="trait-desc">Someone else's success is a reminder of your own inadequacy. Competition, not collaboration.</div>
+        </div>
+      </div>
+      <div class="trait-item" id="f4">
+        <div class="trait-bullet bad">✕</div>
+        <div class="trait-content">
+          <div class="trait-headline">Needs to Look Smart Right Now</div>
+          <div class="trait-desc">Being seen as capable matters more than actually becoming capable. Proving over improving.</div>
+        </div>
+      </div>
+    </div>
+    <button class="intro-btn" id="intro-next-1">Next Chapter →</button>
+    <div class="intro-dots">
+      <div class="intro-dot active"></div>
+      <div class="intro-dot"></div>
+      <div class="intro-dot"></div>
+      <div class="intro-dot"></div>
+    </div>
+  </div>
+
+  <!-- Step 2: Growth Mindset -->
+  <div class="intro-step" id="intro-step-2">
+    <div class="page-turn-bg" id="ptbg2"></div>
+    <div class="step2-eyebrow">Chapter Two</div>
+    <div class="step2-title">The Growth<br>Mindset</div>
+    <div class="step2-sub">When every failure is a data point.</div>
+    <div class="trait-list">
+      <div class="trait-item" id="g1">
+        <div class="trait-bullet good">✓</div>
+        <div class="trait-content">
+          <div class="trait-headline">Runs Toward Challenges</div>
+          <div class="trait-desc">Hard problems are the point. Struggle means you're operating at the edge of your ability — exactly where growth happens.</div>
+        </div>
+      </div>
+      <div class="trait-item" id="g2">
+        <div class="trait-bullet good">✓</div>
+        <div class="trait-content">
+          <div class="trait-headline">Reads Bad Output as Data</div>
+          <div class="trait-desc">The model hallucinated? Good — now you know what the prompt was missing. Every failure is a signal, not a verdict.</div>
+        </div>
+      </div>
+      <div class="trait-item" id="g3">
+        <div class="trait-bullet good">✓</div>
+        <div class="trait-content">
+          <div class="trait-headline">Sees Peers as Allies</div>
+          <div class="trait-desc">Other people's breakthroughs are blueprints, not threats. Borrow their thinking and go further than either of you could alone.</div>
+        </div>
+      </div>
+      <div class="trait-item" id="g4">
+        <div class="trait-bullet good">✓</div>
+        <div class="trait-content">
+          <div class="trait-headline">Becomes Rather Than Proves</div>
+          <div class="trait-desc">Sacrifices the comfort of today's identity to build a better one. The direction matters more than the current position.</div>
+        </div>
+      </div>
+    </div>
+    <button class="intro-btn" id="intro-next-2">Next Chapter →</button>
+    <div class="intro-dots">
+      <div class="intro-dot"></div>
+      <div class="intro-dot active"></div>
+      <div class="intro-dot"></div>
+      <div class="intro-dot"></div>
+    </div>
+  </div>
+
+  <!-- Step 3: Side-by-Side -->
+  <div class="intro-step" id="intro-step-3">
+    <div class="page-turn-bg" id="ptbg3"></div>
+    <div class="step3-header">The Same Situation. Two Different People.</div>
+    <div class="compare-grid">
+      <div class="compare-col fixed-col">
+        <div class="compare-col-label">Fixed Mindset</div>
+        <div class="compare-row" id="cr1f"><div class="compare-icon">✕</div><div class="compare-text"><em>"The AI doesn't work."</em></div></div>
+        <div class="compare-row" id="cr2f"><div class="compare-icon">✕</div><div class="compare-text"><em>"They're better at this than me."</em></div></div>
+        <div class="compare-row" id="cr3f"><div class="compare-icon">✕</div><div class="compare-text"><em>"I'll wait until I feel ready."</em></div></div>
+        <div class="compare-row" id="cr4f"><div class="compare-icon">✕</div><div class="compare-text"><em>"I don't want to look stupid."</em></div></div>
+      </div>
+      <div class="compare-col growth-col">
+        <div class="compare-col-label">Growth Mindset</div>
+        <div class="compare-row" id="cr1g"><div class="compare-icon">✓</div><div class="compare-text"><em>"What is the prompt missing?"</em></div></div>
+        <div class="compare-row" id="cr2g"><div class="compare-icon">✓</div><div class="compare-text"><em>"What can I learn from what they built?"</em></div></div>
+        <div class="compare-row" id="cr3g"><div class="compare-icon">✓</div><div class="compare-text"><em>"I'll build something imperfect today."</em></div></div>
+        <div class="compare-row" id="cr4g"><div class="compare-icon">✓</div><div class="compare-text"><em>"Failing in public means I tried in public."</em></div></div>
+      </div>
+    </div>
+    <button class="intro-btn" id="intro-next-3">Final Chapter →</button>
+    <div class="intro-dots">
+      <div class="intro-dot"></div>
+      <div class="intro-dot"></div>
+      <div class="intro-dot active"></div>
+      <div class="intro-dot"></div>
+    </div>
+  </div>
+
+  <!-- Step 4: The Hook -->
+  <div class="intro-step" id="intro-step-4">
+    <div class="page-turn-bg" id="ptbg4"></div>
+    <div class="hook-eyebrow">Your assignment</div>
+    <div class="hook-title">You have to <em>fail</em><br>to learn.</div>
+    <div class="hook-sub">Five games. Two lives each. Every time you fail, you unlock a lesson from this class — written in your own words, grounded in your own work.</div>
+    <div class="hook-mechanics">
+      <div class="hook-mechanic" id="hm1">
+        <div class="hook-mechanic-num">5</div>
+        <div class="hook-mechanic-label">Arcade Games</div>
+      </div>
+      <div class="hook-mechanic" id="hm2">
+        <div class="hook-mechanic-num">10</div>
+        <div class="hook-mechanic-label">Failures to Collect</div>
+      </div>
+      <div class="hook-mechanic" id="hm3">
+        <div class="hook-mechanic-num">10</div>
+        <div class="hook-mechanic-label">Growth Lessons</div>
+      </div>
+    </div>
+    <button class="intro-btn" id="intro-done">Start Playing →</button>
+    <div class="intro-dots">
+      <div class="intro-dot"></div>
+      <div class="intro-dot"></div>
+      <div class="intro-dot"></div>
+      <div class="intro-dot active"></div>
+    </div>
+  </div>
+
+</div><!-- /intro-overlay -->
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div id="hero-bg-particles"></div>
+  <div id="hero-glow"></div>
+  <h1>Fail <em>Forward.</em></h1>
+  <p class="subtitle">Five arcade games. Ten lessons. You have to lose to learn every single one.</p>
+  <div class="progress-ring-wrap">
+    <svg width="120" height="120" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+      <circle id="prog-ring" cx="60" cy="60" r="50" fill="none" stroke="#ffd700" stroke-width="8"
+        stroke-dasharray="314" stroke-dashoffset="314"
+        stroke-linecap="round" transform="rotate(-90 60 60)"
+        style="transition: stroke-dashoffset 0.5s ease"/>
+      <text x="60" y="65" text-anchor="middle" font-family="Inter" font-size="22" font-weight="800" fill="#fff" id="prog-text">0</text>
+    </svg>
+    <div class="progress-ring-label" id="prog-label">0 / 10 lessons</div>
+  </div>
+  <div class="hero-scroll-hint">↓ scroll to begin</div>
+</section>
+
+<!-- ══ GAME SECTIONS ══ -->
+
+<!-- 1. Flappy Bird -->
+<section class="game-section" id="section-flappy" data-game="flappy">
+  <div class="atmo flappy-cloud"></div>
+  <div class="game-section-header">
+    <div class="game-section-icon">🐦</div>
+    <div class="game-section-name">Flappy Bird</div>
+    <div class="game-section-lives" id="lives-flappy">❤️❤️</div>
+    <div class="game-section-dots">
+      <div class="sdot" id="dot-flappy-1"></div>
+      <div class="sdot" id="dot-flappy-2"></div>
+    </div>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas-flappy" width="480" height="520"></canvas>
+    <div class="start-overlay" id="start-flappy">
+      <h3>🐦 Flappy Bird</h3>
+      <p>Space / Tap to flap</p>
+      <button class="start-play-btn" data-game="flappy">Play</button>
+    </div>
+    <div class="done-badge" id="done-flappy">
+      <div class="done-icon">✓</div>
+      <div class="done-text">Complete</div>
+      <div class="done-sub">Scroll down to continue</div>
+    </div>
+  </div>
+  <div class="controls-hint">Space / Tap to flap</div>
+</section>
+
+<!-- 2. Snake -->
+<section class="game-section" id="section-snake" data-game="snake">
+  <div class="game-section-header">
+    <div class="game-section-icon">🐍</div>
+    <div class="game-section-name">Snake</div>
+    <div class="game-section-lives" id="lives-snake">❤️❤️</div>
+    <div class="game-section-dots">
+      <div class="sdot" id="dot-snake-1"></div>
+      <div class="sdot" id="dot-snake-2"></div>
+    </div>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas-snake" width="340" height="340"></canvas>
+    <div class="start-overlay" id="start-snake">
+      <h3>🐍 Snake</h3>
+      <p>Arrow keys to steer</p>
+      <button class="start-play-btn" data-game="snake">Play</button>
+    </div>
+    <div class="done-badge" id="done-snake">
+      <div class="done-icon">✓</div>
+      <div class="done-text">Complete</div>
+      <div class="done-sub">Scroll down to continue</div>
+    </div>
+  </div>
+  <div class="controls-hint">Arrow keys to steer</div>
+  <div class="lock-overlay" id="lock-snake">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-text">Complete Flappy Bird first</div>
+    <div class="lock-sub">Lose both lives to unlock</div>
+  </div>
+</section>
+
+<!-- 3. Temple Run -->
+<section class="game-section" id="section-temple" data-game="temple">
+  <div class="temple-fog"></div>
+  <div class="game-section-header">
+    <div class="game-section-icon">🏃</div>
+    <div class="game-section-name">Temple Run</div>
+    <div class="game-section-lives" id="lives-temple">❤️❤️</div>
+    <div class="game-section-dots">
+      <div class="sdot" id="dot-temple-1"></div>
+      <div class="sdot" id="dot-temple-2"></div>
+    </div>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas-temple" width="480" height="520"></canvas>
+    <div class="start-overlay" id="start-temple">
+      <h3>🏃 Temple Run</h3>
+      <p>Left / Right arrows to dodge</p>
+      <button class="start-play-btn" data-game="temple">Play</button>
+    </div>
+    <div class="done-badge" id="done-temple">
+      <div class="done-icon">✓</div>
+      <div class="done-text">Complete</div>
+      <div class="done-sub">Scroll down to continue</div>
+    </div>
+  </div>
+  <div class="controls-hint">Left / Right arrows to dodge</div>
+  <div class="lock-overlay" id="lock-temple">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-text">Complete Snake first</div>
+    <div class="lock-sub">Lose both lives to unlock</div>
+  </div>
+</section>
+
+<!-- 4. Retro Pong -->
+<section class="game-section" id="section-pong" data-game="pong">
+  <div class="pong-glow"></div>
+  <div class="game-section-header">
+    <div class="game-section-icon">🏓</div>
+    <div class="game-section-name">Retro Pong</div>
+    <div class="game-section-lives" id="lives-pong">❤️❤️</div>
+    <div class="game-section-dots">
+      <div class="sdot" id="dot-pong-1"></div>
+      <div class="sdot" id="dot-pong-2"></div>
+    </div>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas-pong" width="480" height="520"></canvas>
+    <div class="start-overlay" id="start-pong">
+      <h3>🏓 Retro Pong</h3>
+      <p>Mouse or Left / Right arrows</p>
+      <button class="start-play-btn" data-game="pong">Play</button>
+    </div>
+    <div class="done-badge" id="done-pong">
+      <div class="done-icon">✓</div>
+      <div class="done-text">Complete</div>
+      <div class="done-sub">Scroll down to continue</div>
+    </div>
+  </div>
+  <div class="controls-hint">Mouse or Left / Right arrows</div>
+  <div class="lock-overlay" id="lock-pong">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-text">Complete Temple Run first</div>
+    <div class="lock-sub">Lose both lives to unlock</div>
+  </div>
+</section>
+
+<!-- 5. Asteroids -->
+<section class="game-section" id="section-asteroids" data-game="asteroids">
+  <div class="star-field-atmo" id="star-atmo"></div>
+  <div class="game-section-header">
+    <div class="game-section-icon">🚀</div>
+    <div class="game-section-name">Asteroids</div>
+    <div class="game-section-lives" id="lives-asteroids">❤️❤️</div>
+    <div class="game-section-dots">
+      <div class="sdot" id="dot-asteroids-1"></div>
+      <div class="sdot" id="dot-asteroids-2"></div>
+    </div>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="canvas-asteroids" width="480" height="520"></canvas>
+    <div class="start-overlay" id="start-asteroids">
+      <h3>🚀 Asteroids</h3>
+      <p>Arrows to move · Space to shoot · Click canvas to focus</p>
+      <button class="start-play-btn" data-game="asteroids">Play</button>
+    </div>
+    <div class="done-badge" id="done-asteroids">
+      <div class="done-icon">✓</div>
+      <div class="done-text">Complete</div>
+      <div class="done-sub">Scroll down to see your lessons</div>
+    </div>
+  </div>
+  <div class="controls-hint">Click canvas first · Arrows to move · Space to shoot</div>
+  <div class="lock-overlay" id="lock-asteroids">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-text">Complete Retro Pong first</div>
+    <div class="lock-sub">Lose both lives to unlock</div>
+  </div>
+</section>
+
+<!-- ══ FINISH ══ -->
+<section id="finish-section">
+  <h2>You made it.</h2>
+  <p>10 failures. 10 lessons. That's what a growth mindset looks like in practice.</p>
+  <div class="finish-takeaways" id="finish-takeaways"></div>
+  <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center;">
+    <button class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to top</button>
+    <button class="scroll-top-btn" id="restart-btn" style="background:#2a2a2a;color:#fff;">↺ Start over</button>
+  </div>
+</section>
+
+<!-- ══ TAKEAWAY MODAL ══ -->
+<div id="modal-overlay">
+  <div class="modal-left">
+    <div class="modal-label" id="modal-label"></div>
+    <div class="modal-quote" id="modal-quote"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <div class="modal-countdown" id="modal-countdown"></div>
+      <button class="modal-btn" id="modal-btn" disabled></button>
+    </div>
+  </div>
+  <div class="modal-right">
+    <div class="modal-speaker-block" id="modal-speaker-block">
+      <div class="modal-speaker-name" id="modal-speaker-name"></div>
+      <div class="modal-speaker-note" id="modal-speaker-note"></div>
+    </div>
+    <div class="modal-direct-quote" id="modal-direct-quote"></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ══════════════════════════════════════
+// DATA
+// ══════════════════════════════════════
+const TAKEAWAYS = [null,
+  {
+    quote: "Becoming is better than being.",
+    speaker: "Vincent West, Floor & Decor",
+    speakerNote: "\"Be willing to take risks, fail, and learn from them. The most important thing in life is to keep moving.\"",
+    body: `<p>Walking into a room full of Big 4 consultants and finance experts was intimidating. It was easy to feel like the odd one out. The instinct was to prove capability immediately, to demonstrate that I belonged. That instinct, I learned, is exactly the wrong one.</p><p>A grade, a clean output, a polished demo — none of it measures <strong>potential</strong>. It only captures where you are standing right now. The growth mindset shifts focus away from the current position and toward the <em>direction of movement</em>. Becoming means accepting some discomfort with your present self in order to build a better future one.</p><p>The direction you are moving is the thing that matters.</p>`,
+    directQuote: "\"The hallmark of a fixed mindset is the urgency to prove yourself over and over. The growth mindset allows you to value what you're doing regardless of the outcome.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "Natural ability is a story people tell to explain someone else's success.",
+    speaker: "Mark Metz",
+    speakerNote: "\"Being right 51% of the time is success. Stop measuring yourself only by losses. Progress is about the margin, not perfection.\"",
+    body: `<p>Using AI fluently is not a gift. It takes iteration, experimentation, and a willingness to look lost for a while. When I presented my Health Agent Ecosystem, people praised the outcome without seeing the process behind it. There were broken pipelines, wrong model choices, dead ends, and full rewrites.</p><p>Once you put in the work, the world tends to call you a natural. <strong>Do not let that rewrite your memory of how hard it actually was.</strong> The effort is the thing that built the capability, and it only compounds if you keep showing up.</p><p>Earned skill is largely invisible to everyone but you. That is precisely why it compounds.</p>`,
+    directQuote: "\"People with the fixed mindset don't want their abilities tested. What's the point in risking an experience that could expose their inadequacy?\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "The mark of a champion is the ability to perform when things are not right.",
+    speaker: "BJ Schaknowski",
+    speakerNote: "\"The safest thing is to take a risk. The riskiest thing is to play it safe. That discomfort is the price of growth.\"",
+    body: `<p>Claude Code loses context. Data pipelines break. Models produce confident, incorrect outputs on the exact question you needed answered. <strong>The environment for building with AI is routinely uncooperative</strong>, and a fixed mindset response is to treat that as evidence the tool does not work.</p><p>The growth move is to design around it. I learned to build guardrails, save state files, and structure prompts with failure in mind. Not because it was comfortable, but because the model was going to fail anyway. The question was whether I had a system ready for that moment.</p><p>Your best performance will not always happen under ideal conditions. <em>Train for the broken version.</em></p>`,
+    directQuote: "\"In the growth mindset, there's no need for the self-defeat that comes from seeing setbacks as failures. Instead, setbacks are cues to put in more effort.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "Blame makes you feel less foolish. But you still have the troubles to face.",
+    speaker: "Todd, Blockchain",
+    speakerNote: "\"You learn more from failure than from success. Ready. Fire. Aim. Bias toward action. Move first, correct after.\"",
+    body: `<p>When a model hallucinates, blaming it feels satisfying. It places the problem somewhere else and temporarily relieves the pressure. For months I resisted transitioning to Claude. Then Dr. Kane suggested it was time, and I agreed reluctantly. Eventually I stopped resisting and chose to be more receptive.</p><p>That shift mattered. <strong>The model does not know what it got wrong unless you tell it.</strong> That is not a flaw in the tool. That is the collaboration. The improvement lives in the prompt, not in assigning fault.</p><p>Rise above the blame, look at what the prompt was missing, and fix it. You still have the troubles to face regardless.</p>`,
+    directQuote: "\"Fixed mindset people are so focused on proving themselves and looking smart that they can't afford to take the risk of learning something new.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "Fall in love with the journey, not just your own outputs.",
+    speaker: "Kelsey Bishop, Candor",
+    speakerNote: "\"Place yourself in the right environment to bring intensity. Find a leadership style authentic to you and build from there.\"",
+    body: `<p>The best moments in this class were not always when my own builds shipped. <strong>Some of the most useful learning came from watching a classmate experiment with something I would never have tried.</strong> Someone building a clothing brand shared a workflow structure that changed how I organized my health agents. That kind of cross-pollination does not happen when everyone is heads-down on their own output.</p><p>Watching classmates iterate and occasionally fail taught me as much as any prompt I wrote myself. The growth mindset treats other people's progress as a resource rather than a comparison. Give yourself the gift of being genuinely curious about what your peers are building.</p><p><em>The growth is in the room, not just on your screen.</em></p>`,
+    directQuote: "\"If you want to give yourself a gift, fall in love with challenges, be intrigued by mistakes, enjoy effort, and keep on learning.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "Stop trying to perfect what is already changing.",
+    speaker: "Andy Ruben",
+    speakerNote: "\"The biggest problem with AI adoption is fear. Fear that experimenting will make you worse at your existing skills. You cannot win by copying what competitors are already doing.\"",
+    body: `<p>The model I built fluency with six months ago has already been updated. Workflows I optimized last semester have been superseded by better ones. <strong>A fixed mindset tries to lock in a skill and defend it.</strong> Working with AI does not allow that. The field moves too fast for any single approach to hold its value indefinitely.</p><p>Every time I thought I had a pipeline figured out, something changed. Sometimes that change broke things. Sometimes it made something dramatically better. Either way, clinging to the previous version was not an option.</p><p>The people who keep getting better at this are the ones who stay curious rather than defensive when things shift.</p>`,
+    directQuote: "\"Why waste time proving over and over how great you are, when you could be getting better?\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "Real self-confidence is reflected in your readiness to grow.",
+    speaker: "Jacqui Canney",
+    speakerNote: "\"Focus beats volume. People with the biggest barriers to AI adoption fear change. If you do not give people the freedom to experiment and break things, they will not innovate.\"",
+    body: `<p>Real confidence does not show up in a GPA, a title, or how clean a final project looks. It shows up as <strong>the willingness to stay open when you do not yet know the answer</strong>. That is harder than it sounds, especially in professional environments where appearing capable is rewarded over actually developing capability.</p><p>We are heading into fields where most senior people learned their jobs before these tools existed. That gap is leverage. Bringing genuine fluency into advisory, accounting, or any field where AI literacy is still rare is worth something real. <em>Readiness to keep learning is the whole asset.</em> Everything else is temporary.</p>`,
+    directQuote: "\"Those with the growth mindset found success in doing their best, in learning and improving. And this is exactly what we find in the most prominent people.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "New beliefs do not replace old ones. They sit alongside them and slowly take over.",
+    speaker: "Jeff Jones, Ad Victorium",
+    speakerNote: "\"You will adopt AI or you will be doing something else somewhere else. Inquisitiveness and problem-solving are the top traits. In consulting, that is all you do.\"",
+    body: `<p>Even as I got better with these tools, the old instincts did not disappear. The impulse to blame the model, to walk away from a bad output, to decide something was too difficult — those responses were still there. Learning in this class was not a clean replacement of old habits with better ones.</p><p>Instead, I built new habits on top. <strong>Saving state files. Writing guardrails. Structuring prompts to fail gracefully.</strong> The old instincts are still present. The new ones are just louder now because they have been tested and they work. Change in this sense means carrying both versions and choosing which one to act on.</p>`,
+    directQuote: "\"Even when you improve, the old beliefs aren't removed and replaced. Instead, the new beliefs take their place alongside the old ones, and as they become stronger, they give you a different way to think, feel, and act.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "High standards signal that someone believes you can rise.",
+    speaker: "Hannah, Agency",
+    speakerNote: "\"You will be working for the rest of your life. It is not a race. Take on the hard assignments. The workforce is a group project and you have to make the most of it.\"",
+    body: `<p>This class could have been easy. It was not, and that is precisely what made it worth something. Before this semester I tended to avoid assignments that felt genuinely difficult. Now I actively look for the struggle because I have seen what is on the other side of it.</p><p><strong>Building real tools on a real deadline with a real standard of quality changes your tolerance for difficulty.</strong> Great teachers and great environments do not lower the bar to make people feel comfortable. They hold the standard high because they believe the people in front of them can meet it. <em>Seek out environments that push you.</em> Avoid the ones that reward you for doing the minimum.</p>`,
+    directQuote: "\"Lowering standards doesn't raise self-esteem. It produces lazy students who feel entitled to easy work and empty praise.\" — Carol Dweck, Mindset"
+  },
+  {
+    quote: "In terms of growth, you never stay the same. You go one way or the other.",
+    speaker: "Jeff Brogan",
+    speakerNote: "\"Focus ruthlessly on what actually drives outcomes. If you spend 10 hours on things that do not matter and 2 on the things that do, you will hate your job.\"",
+    body: `<p>The people who spent this semester building real things, running experiments, and learning what these tools can and cannot do are not in the same place they were in August. The gap between those who built and those who waited is not static. <strong>It is compounding.</strong></p><p>What this class chose to do with this year matters more than it might have seemed at the time. The walkway moves whether you are running or not. Staying still is not a neutral position when everything around you is accelerating. <em>The direction you chose this semester will carry further than you expect.</em></p>`,
+    directQuote: "\"Are you using this class to grow? Or are you using it to make sure you don't fail?\" — Carol Dweck, Mindset"
+  }
+];
+
+const GAMES = [
+  { id: 'flappy',    name: 'Flappy Bird',  t1: 1, t2: 2  },
+  { id: 'snake',     name: 'Snake',         t1: 3, t2: 4  },
+  { id: 'temple',    name: 'Temple Run',    t1: 5, t2: 6  },
+  { id: 'pong',      name: 'Retro Pong',    t1: 7, t2: 8  },
+  { id: 'asteroids', name: 'Asteroids',     t1: 9, t2: 10 }
+];
+
+// ══════════════════════════════════════
+// TAKEAWAY ENGINE
+// ══════════════════════════════════════
+const TE = (() => {
+  const KEY = 'gaming_mindset_v3';
+  let state = {};
+  function load() {
+    try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch { state = {}; }
+    GAMES.forEach(g => { if (!state[g.id]) state[g.id] = { livesLost: 0, shown: [] }; });
+  }
+  function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+  function onLifeLost(gameId, cb) {
+    const s = state[gameId];
+    if (s.livesLost >= 2) return;
+    s.livesLost++;
+    const g = GAMES.find(x => x.id === gameId);
+    const tNum = s.livesLost === 1 ? g.t1 : g.t2;
+    if (!s.shown.includes(tNum)) s.shown.push(tNum);
+    save();
+    cb(tNum, s.livesLost === 2);
+  }
+  function isGameOver(id) { return state[id] && state[id].livesLost >= 2; }
+  function getLivesLeft(id) { return state[id] ? 2 - state[id].livesLost : 2; }
+  function getShown(id) { return state[id] ? state[id].shown : []; }
+  function getProgress() { let c=0; GAMES.forEach(g => { c += state[g.id].shown.length; }); return c; }
+  load();
+  return { onLifeLost, isGameOver, getLivesLeft, getShown, getProgress, load };
+})();
+
+// ══════════════════════════════════════
+// INTRO — Animated Book Pages
+// ══════════════════════════════════════
+(function initIntro() {
+  if (localStorage.getItem('gaming_mindset_intro_v3')) {
+    document.getElementById('intro-overlay').style.display = 'none';
+    return;
+  }
+
+  // Build floating page bg for each step
+  ['ptbg1','ptbg2','ptbg3','ptbg4'].forEach((id, si) => {
+    const wrap = document.getElementById(id);
+    if (!wrap) return;
+    const colors = ['#ffffff','#ffffff','#ffffff','#ffffff'];
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement('div');
+      const w = 40 + Math.random() * 120;
+      const h = 60 + Math.random() * 160;
+      const rot = -15 + Math.random() * 30;
+      const dur = 8 + Math.random() * 12;
+      const delay = -Math.random() * dur;
+      const left = Math.random() * 100;
+      el.style.cssText = `
+        position:absolute; width:${w}px; height:${h}px;
+        left:${left}%; top:0;
+        background:${colors[si]}; opacity:${0.03 + Math.random()*0.05};
+        --rot:${rot}deg;
+        animation: pageDrift ${dur}s ${delay}s linear infinite;
+        border:1px solid rgba(255,255,255,0.05);
+      `;
+      wrap.appendChild(el);
+    }
+  });
+
+  let step = 1;
+  const totalSteps = 4;
+
+  function animateIn(stepNum) {
+    if (stepNum === 1) {
+      setTimeout(() => document.getElementById('f1').classList.add('show'), 400);
+      setTimeout(() => document.getElementById('f2').classList.add('show'), 700);
+      setTimeout(() => document.getElementById('f3').classList.add('show'), 1000);
+      setTimeout(() => document.getElementById('f4').classList.add('show'), 1300);
+    } else if (stepNum === 2) {
+      setTimeout(() => document.getElementById('g1').classList.add('show'), 400);
+      setTimeout(() => document.getElementById('g2').classList.add('show'), 700);
+      setTimeout(() => document.getElementById('g3').classList.add('show'), 1000);
+      setTimeout(() => document.getElementById('g4').classList.add('show'), 1300);
+    } else if (stepNum === 3) {
+      ['cr1f','cr2f','cr3f','cr4f','cr1g','cr2g','cr3g','cr4g'].forEach((id, i) => {
+        setTimeout(() => { const el=document.getElementById(id); if(el) el.classList.add('show'); }, 300 + i*150);
+      });
+    } else if (stepNum === 4) {
+      setTimeout(() => document.getElementById('hm1').classList.add('show'), 400);
+      setTimeout(() => document.getElementById('hm2').classList.add('show'), 650);
+      setTimeout(() => document.getElementById('hm3').classList.add('show'), 900);
+    }
+  }
+
+  animateIn(1);
+
+  function goTo(n) {
+    const cur = document.getElementById(`intro-step-${step}`);
+    cur.classList.remove('active');
+    cur.classList.add('exit');
+    setTimeout(() => cur.classList.remove('exit'), 600);
+    step = n;
+    const next = document.getElementById(`intro-step-${step}`);
+    next.classList.add('active');
+    animateIn(step);
+  }
+
+  document.getElementById('intro-next-1').addEventListener('click', () => goTo(2));
+  document.getElementById('intro-next-2').addEventListener('click', () => goTo(3));
+  document.getElementById('intro-next-3').addEventListener('click', () => goTo(4));
+  document.getElementById('intro-done').addEventListener('click', () => {
+    localStorage.setItem('gaming_mindset_intro_v3', '1');
+    const overlay = document.getElementById('intro-overlay');
+    overlay.classList.add('dismissing');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 820);
+  });
+})();
+
+// ══════════════════════════════════════
+// HERO PARTICLES
+// ══════════════════════════════════════
+(function initHeroParticles() {
+  const container = document.getElementById('hero-bg-particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'hero-particle';
+    const size = 40 + Math.random() * 120;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = (Math.random() * 100) + '%';
+    p.style.animationDuration = (12 + Math.random() * 20) + 's';
+    p.style.animationDelay = (-Math.random() * 30) + 's';
+    container.appendChild(p);
+  }
+})();
+
+// ══════════════════════════════════════
+// PROGRESS UI
+// ══════════════════════════════════════
+function updateProgress() {
+  const p = TE.getProgress();
+  const offset = 314 - (314 * p / 10);
+  document.getElementById('prog-ring').setAttribute('stroke-dashoffset', offset);
+  document.getElementById('prog-text').textContent = p;
+  document.getElementById('prog-label').textContent = `${p} / 10 lessons`;
+
+  GAMES.forEach(g => {
+    const shown = TE.getShown(g.id);
+    const left = TE.getLivesLeft(g.id);
+    const livesEl = document.getElementById(`lives-${g.id}`);
+    if (livesEl) livesEl.textContent = left === 2 ? '❤️❤️' : left === 1 ? '❤️' : '💀';
+    [1,2].forEach(n => {
+      const dot = document.getElementById(`dot-${g.id}-${n}`);
+      if (dot) dot.classList.toggle('filled', shown.length >= n);
+    });
+    if (TE.isGameOver(g.id)) {
+      const done = document.getElementById(`done-${g.id}`);
+      if (done) done.style.display = 'flex';
+    }
+  });
+
+  for (let i = 1; i < GAMES.length; i++) {
+    if (TE.isGameOver(GAMES[i-1].id)) {
+      const lock = document.getElementById(`lock-${GAMES[i].id}`);
+      if (lock) lock.classList.add('unlocked');
+    }
+  }
+
+  if (p >= 10) buildFinish();
+}
+
+function buildFinish() {
+  const wrap = document.getElementById('finish-takeaways');
+  if (wrap.children.length > 0) return;
+  TAKEAWAYS.slice(1).forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'finish-t';
+    div.innerHTML = `<div class="finish-t-num">LESSON ${i+1}</div><div class="finish-t-quote">"${t.quote}"</div>`;
+    wrap.appendChild(div);
+  });
+}
+
+// Stars for asteroids bg
+(function buildStars() {
+  const wrap = document.getElementById('star-atmo');
+  if (!wrap) return;
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.style.cssText = `position:absolute;width:${Math.random()<0.7?1:2}px;height:${Math.random()<0.7?1:2}px;background:rgba(255,255,255,${0.3+Math.random()*0.5});top:${Math.random()*100}%;left:${Math.random()*100}%;border-radius:50%`;
+    wrap.appendChild(s);
+  }
+})();
+
+// ══════════════════════════════════════
+// MODAL WITH 15s TIMER
+// ══════════════════════════════════════
+let modalTimerInterval = null;
+
+function showModal(tNum, isOver, onClose) {
+  const t = TAKEAWAYS[tNum];
+  document.getElementById('modal-label').textContent = `Lesson ${tNum} of 10`;
+  document.getElementById('modal-quote').textContent = `"${t.quote}"`;
+
+  document.getElementById('modal-body').innerHTML = t.body || '';
+
+  document.getElementById('modal-speaker-name').textContent = t.speaker || '';
+  document.getElementById('modal-speaker-note').textContent = t.speakerNote || '';
+  document.getElementById('modal-speaker-block').style.display = t.speaker ? 'block' : 'none';
+
+  document.getElementById('modal-direct-quote').textContent = t.directQuote;
+
+  const btn = document.getElementById('modal-btn');
+  const cd = document.getElementById('modal-countdown');
+  btn.textContent = isOver ? 'Got it — keep scrolling' : 'Got it — try again';
+  btn.disabled = true;
+
+  let secs = 15;
+  cd.textContent = `Read for ${secs}s…`;
+  if (modalTimerInterval) clearInterval(modalTimerInterval);
+  modalTimerInterval = setInterval(() => {
+    secs--;
+    if (secs > 0) {
+      cd.textContent = `Read for ${secs}s…`;
+    } else {
+      clearInterval(modalTimerInterval);
+      cd.textContent = '';
+      btn.disabled = false;
+    }
+  }, 1000);
+
+  const overlay = document.getElementById('modal-overlay');
+  overlay.style.display = 'grid';
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('show')));
+
+  btn.onclick = () => {
+    if (modalTimerInterval) clearInterval(modalTimerInterval);
+    overlay.classList.add('dismissing');
+    setTimeout(() => {
+      overlay.classList.remove('show', 'dismissing');
+      overlay.style.display = 'none';
+      onClose(isOver);
+    }, 320);
+  };
+}
+
+// ══════════════════════════════════════
+// GAME ENGINE
+// ══════════════════════════════════════
+let animId = null;
+let currentDestroy = null;
+
+function stopGame() {
+  if (animId) { cancelAnimationFrame(animId); animId = null; }
+  if (currentDestroy) { currentDestroy(); currentDestroy = null; }
+}
+
+function handleLifeLost(gameId) {
+  stopGame();
+  TE.onLifeLost(gameId, (tNum, isOver) => {
+    updateProgress();
+    showModal(tNum, isOver, (over) => {
+      if (over) {
+        const idx = GAMES.findIndex(g => g.id === gameId);
+        if (idx < GAMES.length - 1) {
+          const nextSection = document.getElementById(`section-${GAMES[idx+1].id}`);
+          setTimeout(() => nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+        } else {
+          setTimeout(() => document.getElementById('finish-section').scrollIntoView({ behavior: 'smooth' }), 300);
+        }
+      } else {
+        startGame(gameId);
+      }
+    });
+  });
+}
+
+function diffRamp(elapsed) {
+  const t = elapsed / 1000;
+  if (t < 10) return t / 30;
+  if (t < 20) return 0.33 + (t-10)/30;
+  return Math.min(1, 0.67 + (t-20)/30);
+}
+
+// ── FLAPPY BIRD — 5s countdown ──
+function startFlappy(gameId) {
+  const canvas = document.getElementById('canvas-flappy');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  let bird = { x: 80, y: H/2, vy: 0, r: 14 };
+  let pipes = [];
+  let pipeTimer = 0;
+  let score = 0;
+  let startTime = null, lastTime = null;
+  let countdownDone = false;
+  let countdownVal = 5;
+  let countdownStart = performance.now();
+
+  function getGap(e) { return Math.max(90, 150 - diffRamp(e) * 60); }
+  function getSpeed(e) { return 3.5 + diffRamp(e) * 5; }
+  function getInterval(e) { return Math.max(650, 1200 - diffRamp(e) * 500); }
+
+  function flap() { if (countdownDone) bird.vy = -7.5; }
+  const onKey = e => { if (e.code === 'Space') { e.preventDefault(); flap(); } };
+  const onTap = e => { e.preventDefault(); flap(); };
+  document.addEventListener('keydown', onKey);
+  canvas.addEventListener('touchstart', onTap);
+  canvas.addEventListener('mousedown', onTap);
+  currentDestroy = () => {
+    document.removeEventListener('keydown', onKey);
+    canvas.removeEventListener('touchstart', onTap);
+    canvas.removeEventListener('mousedown', onTap);
+  };
+
+  function spawnPipe(e) {
+    const gap = getGap(e);
+    const topH = 60 + Math.random() * (H - gap - 120);
+    pipes.push({ x: W + 20, topH, gap, passed: false });
+  }
+
+  function drawScene(elapsed) {
+    // Sky
+    ctx.fillStyle = '#70c5ce';
+    ctx.fillRect(0, 0, W, H);
+    // Ground
+    ctx.fillStyle = '#ded895';
+    ctx.fillRect(0, H-40, W, 40);
+    ctx.fillStyle = '#88bb33';
+    ctx.fillRect(0, H-44, W, 8);
+    // Pipes
+    ctx.fillStyle = '#74bf2e';
+    ctx.strokeStyle = '#3a7a00';
+    ctx.lineWidth = 2;
+    pipes.forEach(p => {
+      ctx.fillStyle = '#74bf2e';
+      ctx.fillRect(p.x, 0, 52, p.topH);
+      ctx.strokeRect(p.x, 0, 52, p.topH);
+      ctx.fillStyle = '#88d444';
+      ctx.fillRect(p.x-4, p.topH-16, 60, 16);
+      ctx.strokeRect(p.x-4, p.topH-16, 60, 16);
+      ctx.fillStyle = '#74bf2e';
+      ctx.fillRect(p.x, p.topH+p.gap, 52, H);
+      ctx.strokeRect(p.x, p.topH+p.gap, 52, H);
+      ctx.fillStyle = '#88d444';
+      ctx.fillRect(p.x-4, p.topH+p.gap, 60, 16);
+      ctx.strokeRect(p.x-4, p.topH+p.gap, 60, 16);
+    });
+    // Bird
+    ctx.save();
+    ctx.translate(bird.x, bird.y);
+    ctx.rotate(Math.min(bird.vy * 0.05, 0.5));
+    ctx.fillStyle = '#f4b41a';
+    ctx.beginPath(); ctx.ellipse(0,0,bird.r+2,bird.r,0,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(3,-2,bird.r*0.55,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#222';
+    ctx.beginPath(); ctx.arc(7,-4,4,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(8,-5,1.5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e86d17';
+    ctx.fillRect(bird.r,-3,10,5);
+    ctx.restore();
+    // Clouds
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    [[60,80],[200,50],[360,100],[440,60]].forEach(([cx,cy]) => {
+      ctx.beginPath(); ctx.ellipse(cx,cy,40,20,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(cx-20,cy+5,25,15,0,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(cx+20,cy+5,25,15,0,0,Math.PI*2); ctx.fill();
+    });
+  }
+
+  function loop(ts) {
+    const now = ts;
+
+    // Countdown phase
+    if (!countdownDone) {
+      const elapsed = now - countdownStart;
+      countdownVal = Math.max(1, 5 - Math.floor(elapsed / 1000));
+      if (elapsed >= 5000) countdownDone = true;
+
+      drawScene(0);
+
+      // Countdown overlay on canvas
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#fff';
+      ctx.font = `900 90px Inter`;
+      ctx.fillText(countdownDone ? 'GO!' : String(countdownVal), W/2, H/2 + 30);
+      ctx.font = '600 18px Inter';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText('Get ready…', W/2, H/2 - 40);
+      ctx.textAlign = 'left';
+
+      if (!countdownDone) { animId = requestAnimationFrame(loop); return; }
+      // Transition frame shown, next frame starts game
+      animId = requestAnimationFrame(loop);
+      return;
+    }
+
+    if (!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+    const dt = lastTime ? Math.min(ts - lastTime, 50) : 16;
+    lastTime = ts;
+
+    bird.vy += 0.52;
+    bird.y += bird.vy;
+    pipeTimer += dt;
+    if (pipeTimer > getInterval(elapsed)) { pipeTimer = 0; spawnPipe(elapsed); }
+    const spd = getSpeed(elapsed);
+    pipes.forEach(p => {
+      p.x -= spd;
+      if (!p.passed && p.x + 52 < bird.x) { p.passed = true; score++; }
+    });
+    pipes = pipes.filter(p => p.x > -60);
+
+    drawScene(elapsed);
+    ctx.save();
+    ctx.font = 'bold 14px Inter'; ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.textAlign = 'left'; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 4;
+    ctx.fillText(`SCORE  ${score}`, 14, 24); ctx.restore();
+
+    let dead = bird.y - bird.r < 0 || bird.y + bird.r > H - 40;
+    pipes.forEach(p => {
+      if (bird.x+bird.r > p.x+4 && bird.x-bird.r < p.x+48) {
+        if (bird.y-bird.r < p.topH || bird.y+bird.r > p.topH+p.gap) dead = true;
+      }
+    });
+    if (dead) { handleLifeLost(gameId); return; }
+    animId = requestAnimationFrame(loop);
+  }
+  animId = requestAnimationFrame(loop);
+}
+
+// ── SNAKE — thick white boundary ──
+function startSnake(gameId) {
+  const canvas = document.getElementById('canvas-snake');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const BORDER = 12;
+  const CELL = 16;
+  const COLS = Math.floor((W - BORDER*2) / CELL);
+  const ROWS = Math.floor((H - BORDER*2) / CELL);
+  const OX = BORDER, OY = BORDER; // origin of play area
+
+  let snake, dir, nextDir, food, foodCount, speed, lastMove, startTime, score;
+
+  function init() {
+    snake = [
+      {x:Math.floor(COLS/2), y:Math.floor(ROWS/2)},
+      {x:Math.floor(COLS/2)-1, y:Math.floor(ROWS/2)},
+      {x:Math.floor(COLS/2)-2, y:Math.floor(ROWS/2)},
+    ];
+    dir = {x:1,y:0}; nextDir = {x:1,y:0};
+    foodCount = 0; speed = 120; score = 0;
+    placeFood(); startTime = performance.now(); lastMove = performance.now();
+  }
+  function placeFood() {
+    let pos;
+    do { pos = {x:Math.floor(Math.random()*COLS), y:Math.floor(Math.random()*ROWS)}; }
+    while (snake.some(s => s.x===pos.x && s.y===pos.y));
+    food = pos;
+  }
+
+  const onKey = e => {
+    const m = {ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0}};
+    if (m[e.key]) { e.preventDefault(); const nd=m[e.key]; if(nd.x!==-dir.x||nd.y!==-dir.y) nextDir=nd; }
+  };
+  document.addEventListener('keydown', onKey);
+  currentDestroy = () => document.removeEventListener('keydown', onKey);
+  init();
+
+  function sx(gx) { return OX + gx * CELL; }
+  function sy(gy) { return OY + gy * CELL; }
+
+  function loop(ts) {
+    if (!startTime) startTime = ts;
+    if (ts - lastMove > speed) {
+      lastMove = ts;
+      dir = nextDir;
+      const head = {x: snake[0].x+dir.x, y: snake[0].y+dir.y};
+      if (head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS) { handleLifeLost(gameId); return; }
+      if (snake.some(s=>s.x===head.x&&s.y===head.y)) { handleLifeLost(gameId); return; }
+      snake.unshift(head);
+      if (head.x===food.x&&head.y===food.y) {
+        foodCount++; score += 10;
+        if (foodCount%3===0) speed = Math.max(55, speed*0.85);
+        placeFood();
+      } else snake.pop();
+    }
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    // Thick white boundary
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = BORDER;
+    ctx.strokeRect(BORDER/2, BORDER/2, W-BORDER, H-BORDER);
+
+    // Grid (inside boundary)
+    ctx.strokeStyle = 'rgba(0,60,0,0.35)';
+    ctx.lineWidth = 0.5;
+    for (let x=0;x<=COLS;x++){ctx.beginPath();ctx.moveTo(sx(x),OY);ctx.lineTo(sx(x),OY+ROWS*CELL);ctx.stroke();}
+    for (let y=0;y<=ROWS;y++){ctx.beginPath();ctx.moveTo(OX,sy(y));ctx.lineTo(OX+COLS*CELL,sy(y));ctx.stroke();}
+
+    // Food
+    ctx.fillStyle = '#cc2222';
+    ctx.fillRect(sx(food.x)+1, sy(food.y)+1, CELL-2, CELL-2);
+    ctx.fillStyle = '#ff4444';
+    ctx.fillRect(sx(food.x)+3, sy(food.y)+3, 4, 4);
+
+    // Snake
+    snake.forEach((s, i) => {
+      ctx.fillStyle = i===0 ? '#55ee55' : '#44cc44';
+      ctx.fillRect(sx(s.x)+1, sy(s.y)+1, CELL-2, CELL-2);
+      if (i===0) {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(sx(s.x)+4, sy(s.y)+4, 3, 3);
+        ctx.fillRect(sx(s.x)+9, sy(s.y)+4, 3, 3);
+      }
+    });
+    ctx.save();
+    ctx.font = 'bold 14px Inter'; ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.textAlign = 'left'; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 4;
+    ctx.fillText(`SCORE  ${score}`, 14, 24); ctx.restore();
+    animId = requestAnimationFrame(loop);
+  }
+  animId = requestAnimationFrame(loop);
+}
+
+// ── TEMPLE RUN — wider planks ──
+function startTemple(gameId) {
+  const canvas = document.getElementById('canvas-temple');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const LANES = [W/4, W/2, 3*W/4];
+  let laneIdx = 1, obstacles = [], particles = [], coins = [];
+  let startTime = null, lastSpawn = 0, coinSpawn = 0;
+  let alive = true, distancePx = 0, coinScore = 0;
+
+  const onKey = e => {
+    if (!alive) return;
+    if (e.key==='ArrowLeft'){e.preventDefault();laneIdx=Math.max(0,laneIdx-1);}
+    if (e.key==='ArrowRight'){e.preventDefault();laneIdx=Math.min(2,laneIdx+1);}
+  };
+  document.addEventListener('keydown', onKey);
+  currentDestroy = () => { document.removeEventListener('keydown', onKey); alive=false; };
+
+  function getSpawnInterval(e) { return Math.max(400, 1800-diffRamp(e)*1200); }
+  function getSpeed(e) { return 4+diffRamp(e)*8; }
+
+  function loop(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+    const spd = getSpeed(elapsed);
+    distancePx += spd;
+
+    if (ts-lastSpawn > getSpawnInterval(elapsed)) {
+      lastSpawn = ts;
+      const r = diffRamp(elapsed);
+      const count = Math.random()<0.3+r*0.3 ? 2 : 1;
+      const idxs = [0,1,2].sort(()=>Math.random()-0.5).slice(0,count);
+      idxs.forEach(li => obstacles.push({lane:li,y:-40,w:52,h:28}));
+    }
+    if (ts-coinSpawn > 900) {
+      coinSpawn = ts;
+      if (Math.random()<0.5) coins.push({lane:Math.floor(Math.random()*3),y:-20,collected:false});
+    }
+
+    obstacles.forEach(o=>o.y+=spd);
+    coins.forEach(c=>c.y+=spd);
+    obstacles = obstacles.filter(o=>o.y<H+50);
+    coins = coins.filter(c=>c.y<H+50&&!c.collected);
+
+    if (Math.random()<0.3) particles.push({x:LANES[laneIdx],y:H-60,life:1,r:2+Math.random()*3,vx:(Math.random()-0.5)*2,vy:-1-Math.random()*2});
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.05;});
+    particles = particles.filter(p=>p.life>0);
+
+    const grad = ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0,'#0d1a05');
+    grad.addColorStop(0.6,'#1a2a08');
+    grad.addColorStop(1,'#2a1800');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,W,H);
+
+    // Wider planks: 80px tall, scroll every 80px so they look like real boards
+    const plankH = 80;
+    const plankOffset = distancePx % plankH;
+    const pathL = W/4 - 40, pathW = W/2 + 80;
+    for (let y = -plankOffset; y < H + plankH; y += plankH) {
+      // Main plank
+      ctx.fillStyle = '#6a4418';
+      ctx.fillRect(pathL, y, pathW, plankH - 6);
+      // Top grain line
+      ctx.fillStyle = '#8a6030';
+      ctx.fillRect(pathL, y, pathW, 8);
+      // Bottom shadow line
+      ctx.fillStyle = '#3a2008';
+      ctx.fillRect(pathL, y + plankH - 14, pathW, 8);
+      // Plank gap
+      ctx.fillStyle = '#1a0800';
+      ctx.fillRect(pathL, y + plankH - 6, pathW, 6);
+    }
+
+    ctx.strokeStyle = 'rgba(200,150,50,0.25)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([10,20]);
+    [W/4+W/8, W/2+W/8].forEach(x => {
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = 'rgba(0,60,40,0.45)';
+    ctx.fillRect(0,0,W/4-40,H);
+    ctx.fillRect(3*W/4+40,0,W,H);
+
+    coins.forEach(c => {
+      const cx = LANES[c.lane];
+      ctx.fillStyle = '#ffd700';
+      ctx.beginPath();ctx.arc(cx,c.y,10,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle = '#ffec6e';
+      ctx.beginPath();ctx.arc(cx-2,c.y-2,4,0,Math.PI*2);ctx.fill();
+      if (!c.collected && Math.abs(cx-LANES[laneIdx])<30 && Math.abs(c.y-(H-60))<30) { c.collected=true; coinScore+=5; }
+    });
+
+    obstacles.forEach(o => {
+      const cx = LANES[o.lane];
+      ctx.fillStyle = '#c8691a';
+      ctx.fillRect(cx-o.w/2, o.y, o.w, o.h);
+      ctx.fillStyle = '#ff9944';
+      ctx.fillRect(cx-o.w/2+4, o.y+2, o.w-8, 8);
+      ctx.strokeStyle = '#7a3a00';
+      ctx.lineWidth=2;
+      ctx.strokeRect(cx-o.w/2, o.y, o.w, o.h);
+    });
+
+    particles.forEach(p=>{
+      ctx.globalAlpha=p.life*0.5;
+      ctx.fillStyle='#c8691a';
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+    });
+    ctx.globalAlpha=1;
+
+    const px = LANES[laneIdx], py = H-60;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();ctx.arc(px,py-22,9,0,Math.PI*2);ctx.fill();
+    ctx.fillRect(px-6,py-13,12,22);
+    const legT = ts/120;
+    ctx.fillRect(px-6,py+9,6,14+Math.sin(legT)*5);
+    ctx.fillRect(px,py+9,6,14-Math.sin(legT)*5);
+
+    const score = coinScore + Math.floor(elapsed / 1000);
+    ctx.save();
+    ctx.font = 'bold 14px Inter'; ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.textAlign = 'left'; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 4;
+    ctx.fillText(`SCORE  ${score}`, 14, 24); ctx.restore();
+
+    obstacles.forEach(o => {
+      if (!alive) return;
+      const cx=LANES[o.lane];
+      if (Math.abs(cx-LANES[laneIdx])<o.w/2+12 && Math.abs(o.y+o.h/2-(py-5))<o.h/2+20) {
+        alive=false; handleLifeLost(gameId);
+      }
+    });
+    if (alive) animId = requestAnimationFrame(loop);
+  }
+  animId = requestAnimationFrame(loop);
+}
+
+// ── PONG — capped ball speed on reset ──
+function startPong(gameId) {
+  const canvas = document.getElementById('canvas-pong');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const PAD_W=80, PAD_H=12, BR=8;
+
+  // Ball initial speed capped — never too fast after a reset
+  function newBall() {
+    return { x:W/2, y:H/2, vx:(Math.random()-0.5)*3+2, vy:-3.5 };
+  }
+
+  let ball = newBall();
+  let playerX=W/2, aiX=W/2, rallies=0;
+  let startTime=null, mouseX=null, keys={left:false,right:false};
+
+  // Speed multiplier — gentler ramp, never exceeds 2.2x
+  function getSpeedMult(e) { return Math.min(2.2, 0.7 + diffRamp(e)*1.8 + (rallies>=7 ? 0.6 : 0)); }
+
+  const onKey = e=>{
+    if(e.key==='ArrowLeft'){e.preventDefault();keys.left=true;}
+    if(e.key==='ArrowRight'){e.preventDefault();keys.right=true;}
+  };
+  const onKeyUp = e=>{
+    if(e.key==='ArrowLeft')keys.left=false;
+    if(e.key==='ArrowRight')keys.right=false;
+  };
+  const onMouse = e=>{ const r=canvas.getBoundingClientRect(); mouseX=e.clientX-r.left; };
+  document.addEventListener('keydown',onKey);
+  document.addEventListener('keyup',onKeyUp);
+  canvas.addEventListener('mousemove',onMouse);
+  currentDestroy=()=>{
+    document.removeEventListener('keydown',onKey);
+    document.removeEventListener('keyup',onKeyUp);
+    canvas.removeEventListener('mousemove',onMouse);
+  };
+
+  function loop(ts) {
+    if (!startTime) startTime=ts;
+    const elapsed=ts-startTime;
+    const sm=getSpeedMult(elapsed);
+
+    if(mouseX!==null) playerX+=(mouseX-playerX)*0.25;
+    if(keys.left)  playerX-=5+sm;
+    if(keys.right) playerX+=5+sm;
+    playerX=Math.max(PAD_W/2,Math.min(W-PAD_W/2,playerX));
+
+    const aiErr=30-sm*3;
+    const aiTarget=ball.x+(Math.random()-0.5)*Math.max(0,aiErr)*2;
+    aiX+=(aiTarget-aiX)*(0.03+sm*0.015);
+    aiX=Math.max(PAD_W/2,Math.min(W-PAD_W/2,aiX));
+
+    ball.x+=ball.vx*sm; ball.y+=ball.vy*sm;
+    if(ball.x<BR||ball.x>W-BR) ball.vx*=-1;
+
+    if(ball.vy<0&&ball.y-BR<42+PAD_H&&ball.y>20){
+      if(Math.abs(ball.x-aiX)<PAD_W/2+BR){ball.vy=Math.abs(ball.vy);ball.vx+=(ball.x-aiX)/(PAD_W/2)*1.2;rallies++;}
+    }
+    if(ball.vy>0&&ball.y+BR>H-42-PAD_H&&ball.y<H-20){
+      if(Math.abs(ball.x-playerX)<PAD_W/2+BR){ball.vy=-Math.abs(ball.vy);ball.vx+=(ball.x-playerX)/(PAD_W/2)*1.2;rallies++;}
+    }
+
+    if(ball.y>H+BR){ handleLifeLost(gameId); return; }
+    if(ball.y<-BR) ball=newBall(); // AI misses — reset at safe speed
+
+    ctx.fillStyle='#0d0d40';
+    ctx.fillRect(0,0,W,H);
+
+    const grd=ctx.createRadialGradient(W/2,H/2,10,W/2,H/2,200);
+    grd.addColorStop(0,'rgba(0,80,160,0.15)');
+    grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
+
+    ctx.strokeStyle='rgba(100,120,255,0.2)';ctx.lineWidth=1;ctx.setLineDash([10,10]);
+    ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();ctx.setLineDash([]);
+
+    ctx.fillStyle='#fff';
+    ctx.shadowColor='rgba(255,255,255,0.5)';ctx.shadowBlur=10;
+    ctx.beginPath();ctx.roundRect(aiX-PAD_W/2,42,PAD_W,PAD_H,4);ctx.fill();
+    ctx.beginPath();ctx.roundRect(playerX-PAD_W/2,H-42-PAD_H,PAD_W,PAD_H,4);ctx.fill();
+    ctx.shadowBlur=0;
+
+    ctx.fillStyle='#fff';ctx.shadowColor='rgba(255,255,255,0.8)';ctx.shadowBlur=12;
+    ctx.beginPath();ctx.arc(ball.x,ball.y,BR,0,Math.PI*2);ctx.fill();
+    ctx.shadowBlur=0;
+
+    ctx.fillStyle='rgba(100,120,255,0.4)';ctx.font='600 12px Inter';ctx.textAlign='center';
+    ctx.fillText('AI',W/2,30);
+    ctx.fillText('YOU',W/2,H-10);
+    ctx.textAlign='left';
+    ctx.save();
+    ctx.font = 'bold 14px Inter'; ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.textAlign = 'left'; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 4;
+    ctx.fillText(`SCORE  ${rallies}`, 14, 24); ctx.restore();
+
+    animId=requestAnimationFrame(loop);
+  }
+  animId=requestAnimationFrame(loop);
+}
+
+// ── ASTEROIDS — thick white boundary, canvas-focus prevents scroll conflict ──
+function startAsteroids(gameId) {
+  const canvas = document.getElementById('canvas-asteroids');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const BORDER = 10; // play area margin inside boundary
+  const PLAY_X1 = BORDER, PLAY_Y1 = BORDER, PLAY_X2 = W-BORDER, PLAY_Y2 = H-BORDER;
+
+  let ship={x:W/2,y:H/2,angle:-Math.PI/2,vx:0,vy:0,r:14};
+  let bullets=[],asteroids=[],particles=[],wave=0,startTime=null,lastShot=0,score=0;
+  let mouseX=W/2, mouseY=H/2, mouseDown=false;
+
+  function getCanvasPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function spawnWave() {
+    wave++;
+    const count=3+(wave-1)*2;
+    for(let i=0;i<count;i++){
+      let ax,ay;
+      do{ax=PLAY_X1+Math.random()*(PLAY_X2-PLAY_X1);ay=PLAY_Y1+Math.random()*(PLAY_Y2-PLAY_Y1);}
+      while(Math.hypot(ax-ship.x,ay-ship.y)<120);
+      const spd=(1+wave*0.3)*(0.6+Math.random()*0.8);
+      const ang=Math.random()*Math.PI*2;
+      asteroids.push({x:ax,y:ay,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,r:28+Math.random()*20,sides:7+Math.floor(Math.random()*4),rot:Math.random()*Math.PI*2,rotV:(Math.random()-0.5)*0.04});
+    }
+  }
+
+  const onMouseMove = e => { const p=getCanvasPos(e); mouseX=p.x; mouseY=p.y; };
+  const onMouseDown = e => { if(e.button===0){ e.preventDefault(); mouseDown=true; } };
+  const onMouseUp   = e => { if(e.button===0) mouseDown=false; };
+  const onMouseClick = e => {
+    e.preventDefault();
+    const now = performance.now();
+    if(now - lastShot > 220){
+      lastShot = now;
+      bullets.push({x:ship.x+Math.cos(ship.angle)*ship.r, y:ship.y+Math.sin(ship.angle)*ship.r, vx:Math.cos(ship.angle)*9, vy:Math.sin(ship.angle)*9, life:60});
+    }
+  };
+  canvas.addEventListener('mousemove', onMouseMove);
+  canvas.addEventListener('mousedown', onMouseDown);
+  canvas.addEventListener('mouseup',   onMouseUp);
+  canvas.addEventListener('click',     onMouseClick);
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+  currentDestroy=()=>{
+    canvas.removeEventListener('mousemove', onMouseMove);
+    canvas.removeEventListener('mousedown', onMouseDown);
+    canvas.removeEventListener('mouseup',   onMouseUp);
+    canvas.removeEventListener('click',     onMouseClick);
+  };
+
+  spawnWave();
+
+  // Wrap within play area boundary
+  function wrap(o) {
+    if(o.x<PLAY_X1-o.r) o.x=PLAY_X2+o.r;
+    if(o.x>PLAY_X2+o.r) o.x=PLAY_X1-o.r;
+    if(o.y<PLAY_Y1-o.r) o.y=PLAY_Y2+o.r;
+    if(o.y>PLAY_Y2+o.r) o.y=PLAY_Y1-o.r;
+  }
+
+  function loop(ts) {
+    if(!startTime)startTime=ts;
+    // Rotate ship to face mouse
+    const targetAngle = Math.atan2(mouseY - ship.y, mouseX - ship.x);
+    let da = targetAngle - ship.angle;
+    while(da > Math.PI) da -= Math.PI*2;
+    while(da < -Math.PI) da += Math.PI*2;
+    ship.angle += da * 0.18;
+    // Thrust toward mouse when holding button
+    if(mouseDown){
+      ship.vx+=Math.cos(ship.angle)*0.28; ship.vy+=Math.sin(ship.angle)*0.28;
+      if(Math.random()<0.4) particles.push({x:ship.x-Math.cos(ship.angle)*14,y:ship.y-Math.sin(ship.angle)*14,vx:-Math.cos(ship.angle)*2+(Math.random()-0.5),vy:-Math.sin(ship.angle)*2+(Math.random()-0.5),life:1});
+    }
+    ship.vx*=0.98;ship.vy*=0.98;ship.x+=ship.vx;ship.y+=ship.vy;wrap(ship);
+    bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.life--;});bullets=bullets.filter(b=>b.life>0);
+    asteroids.forEach(a=>{a.x+=a.vx;a.y+=a.vy;a.rot+=a.rotV;wrap(a);});
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.05;p.vx*=0.95;p.vy*=0.95;});
+    particles=particles.filter(p=>p.life>0);
+
+    const rmB=new Set(),rmA=new Set(),toAdd=[];
+    bullets.forEach((b,bi)=>{
+      asteroids.forEach((a,ai)=>{
+        if(rmA.has(ai))return;
+        if(Math.hypot(b.x-a.x,b.y-a.y)<a.r){
+          rmB.add(bi);rmA.add(ai);score+=10;
+          if(a.r>=15){
+            for(let i=0;i<2;i++){const ag=Math.random()*Math.PI*2,sp=1.5+Math.random()*2;toAdd.push({x:a.x,y:a.y,vx:Math.cos(ag)*sp,vy:Math.sin(ag)*sp,r:a.r/2,sides:a.sides,rot:Math.random()*Math.PI*2,rotV:(Math.random()-0.5)*0.06});}
+          }
+          for(let i=0;i<6;i++){const ag=Math.random()*Math.PI*2,sp=1+Math.random()*3;particles.push({x:a.x,y:a.y,vx:Math.cos(ag)*sp,vy:Math.sin(ag)*sp,life:1});}
+        }
+      });
+    });
+    bullets=bullets.filter((_,i)=>!rmB.has(i));
+    asteroids=asteroids.filter((_,i)=>!rmA.has(i));
+    asteroids.push(...toAdd);
+    if(asteroids.length===0)spawnWave();
+
+    // Draw
+    ctx.fillStyle='#000014';ctx.fillRect(0,0,W,H);
+
+    // Thick white boundary
+    ctx.strokeStyle='#fff';
+    ctx.lineWidth=BORDER*1.5;
+    ctx.strokeRect(BORDER*0.75,BORDER*0.75,W-BORDER*1.5,H-BORDER*1.5);
+
+    ctx.save();
+    ctx.font = 'bold 14px Inter'; ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.textAlign = 'left'; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 4;
+    ctx.fillText(`SCORE  ${score}`, 20, 30); ctx.restore();
+
+    // Stars
+    ctx.fillStyle='rgba(255,255,255,0.5)';
+    for(let i=0;i<60;i++){const sx=(i*137*3)%W,sy=(i*137*7)%H;ctx.fillRect(sx,sy,i%5===0?2:1,i%5===0?2:1);}
+
+    particles.forEach(p=>{ctx.globalAlpha=p.life*0.8;ctx.fillStyle='#fff';ctx.fillRect(p.x-1,p.y-1,2,2);});
+    ctx.globalAlpha=1;
+
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;
+    asteroids.forEach(a=>{
+      ctx.save();ctx.translate(a.x,a.y);ctx.rotate(a.rot);
+      ctx.beginPath();
+      for(let i=0;i<a.sides;i++){const ag=(i/a.sides)*Math.PI*2,j=a.r*(0.8+Math.sin(i*7.3)*0.2);i===0?ctx.moveTo(Math.cos(ag)*j,Math.sin(ag)*j):ctx.lineTo(Math.cos(ag)*j,Math.sin(ag)*j);}
+      ctx.closePath();ctx.stroke();ctx.restore();
+    });
+
+    ctx.fillStyle='#fff';
+    bullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,3,0,Math.PI*2);ctx.fill();});
+
+    ctx.save();ctx.translate(ship.x,ship.y);ctx.rotate(ship.angle);
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(ship.r,0);ctx.lineTo(-ship.r*0.7,-ship.r*0.6);ctx.lineTo(-ship.r*0.4,0);ctx.lineTo(-ship.r*0.7,ship.r*0.6);ctx.closePath();ctx.stroke();
+    ctx.restore();
+
+    // Cursor crosshair
+    ctx.save();ctx.strokeStyle='rgba(255,255,255,0.35)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(mouseX-8,mouseY);ctx.lineTo(mouseX+8,mouseY);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(mouseX,mouseY-8);ctx.lineTo(mouseX,mouseY+8);ctx.stroke();
+    ctx.beginPath();ctx.arc(mouseX,mouseY,5,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+
+    // Controls hint (top right)
+    ctx.fillStyle='rgba(255,255,255,0.25)';ctx.font='500 11px Inter';ctx.textAlign='right';
+    ctx.fillText('Move mouse to aim  •  Hold to thrust  •  Click to fire',W-12,H-12);ctx.textAlign='left';
+
+    if(asteroids.some(a=>Math.hypot(ship.x-a.x,ship.y-a.y)<ship.r+a.r-8)){handleLifeLost(gameId);return;}
+    animId=requestAnimationFrame(loop);
+  }
+  animId=requestAnimationFrame(loop);
+}
+
+// ══════════════════════════════════════
+// DISPATCHER
+// ══════════════════════════════════════
+const GAME_FNS = { flappy:startFlappy, snake:startSnake, temple:startTemple, pong:startPong, asteroids:startAsteroids };
+
+function startGame(gameId) {
+  stopGame();
+  GAME_FNS[gameId](gameId);
+}
+
+// Restart button
+document.getElementById('restart-btn').addEventListener('click', () => {
+  localStorage.removeItem('gaming_mindset_v3');
+  localStorage.removeItem('gaming_mindset_intro_v3');
+  window.location.reload();
+});
+
+// Wire up start buttons
+document.querySelectorAll('.start-play-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const gameId = btn.dataset.game;
+    document.getElementById(`start-${gameId}`).style.display = 'none';
+    startGame(gameId);
+  });
+});
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+// Finish section "deaths" → "failures" already in HTML
+updateProgress();
+
+GAMES.forEach(g => {
+  if (TE.isGameOver(g.id)) {
+    const startEl = document.getElementById(`start-${g.id}`);
+    if (startEl) startEl.style.display = 'none';
+    const doneEl = document.getElementById(`done-${g.id}`);
+    if (doneEl) doneEl.style.display = 'flex';
+  }
+});
+</script>
+</body>
+</html>
